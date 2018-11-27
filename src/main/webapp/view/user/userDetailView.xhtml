@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/standardLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="userDetailForm"
+			enctype="multipart/form-data">
+			<h1 style="color:#006ECC">
+				<h:outputText value="#{label['user_detail_title']}" />
+			</h1>
+			<p:messages globalOnly="true" showDetail="false" showSummary="true"
+				autoUpdate="true" />
+			<p:separator></p:separator>
+			<p:panelGrid id="basicInformationGrid" columns="2"
+				columnClasses="width-30, width-70" layout="grid">
+
+				<p:outputLabel
+					value="#{label['user_id']}" />
+				<h:outputText id="userid"
+					value="#{userDetailAction.userData.userId}" />
+
+				<p:outputLabel
+					value="#{label['user_name']}" />
+				<h:outputText id="username"
+					value="#{userDetailAction.userData.userName}" />
+
+				<p:outputLabel
+					value="#{label['user_gender']}" />
+				<h:outputText id="gender"
+					value="#{userDetailAction.userData.genderlbl}" />
+
+				<p:outputLabel value="#{label['user_role']}" />
+				<h:outputText id="role"
+					value="#{userDetailAction.userData.rolelbl}" />
+
+				<p:outputLabel
+					value="#{label['user_position']}" />
+				<h:outputText id="position"
+					value="#{userDetailAction.userData.position}" />
+
+				<p:outputLabel value="#{label['user_description']}" />
+				<h:outputText id="description"
+					value="#{userDetailAction.userData.description}" />
+
+				<p:outputLabel
+					value="#{label['user_address']}" />
+				<h:outputText id="address"
+					value="#{userDetailAction.userData.address}" />
+					
+				<p:outputLabel
+					value="#{label['user_pwd']}" />
+				<h:outputText id="password"
+					value="#{userDetailAction.userData.password}" />	
+					
+					<p:commandButton id="backBtn"
+						value="Back"
+						styleClass="btn"
+						immediate="true"
+						action="UserSearch">
+					</p:commandButton>
+					<c:set target="#{flash}" property="userId" value="#{userDetailAction.userid}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/standardLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="userDeleteForm"
+			enctype="multipart/form-data">
+			<h1>
+				<h:outputText value="#{label['user_delete']}" />
+			</h1>
+			<p:messages globalOnly="true" showDetail="false" showSummary="true"
+				autoUpdate="true" />
+			<p:separator></p:separator>
+			<p:panelGrid id="userDeleteGrid" columns="2"
+				columnClasses="width-30, width-70" layout="grid">
+
+				<p:outputLabel
+					value="#{label['user_id']}" />
+				<h:outputText id="userid"
+					value="#{userDeletAction.userData.userId}" />
+
+				<p:outputLabel
+					value="#{label['user_name']}" />
+				<h:outputText id="username"
+					value="#{userDeletAction.userData.userName}" />
+
+				<p:outputLabel value="#{label['user_description']}" />
+				<h:outputText id="description"
+					value="#{userDeletAction.userData.description}" />
+					
+				<h:panelGroup>
+					<p:commandButton id="register"
+						value="Delete"
+						update=":userUpdateForm"
+						process="userUpdateForm"
+						styleClass="btn"
+						action="#{userDeletAction.delete}" ajax="false" />
+					<p:spacer width="2"></p:spacer>
+
+					<p:commandButton id="backBtn"
+						value="Back"
+						styleClass="btn"
+						immediate="true"
+						action="UserSearch">
+					</p:commandButton>
+					<c:set target="#{flash}" property="userId" value="#{userDeletAction.userID}" />
+				</h:panelGroup>	
+					
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

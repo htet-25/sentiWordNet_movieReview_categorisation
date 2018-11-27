@@ -1,0 +1,76 @@
+<!DOCTYPE f:view PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<h:head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<title>Anti-Criminal</title>
+		<link rel="shortcut icon" href="#{request.contextPath}/images/fav.ico" type="image/x-icon"></link>
+		<link
+			href="#{request.contextPath}/css/fontawesome/css/font-awesome.css"
+			rel="stylesheet" />
+		<link href="#{request.contextPath}/css/animate.min.css"
+			rel="stylesheet" />
+		<link href="#{request.contextPath}/css/animate.delay.css"
+			rel="stylesheet" />
+		<link href="#{request.contextPath}/css/style.css" rel="stylesheet" />
+		<h:outputScript library="primefaces" name="js/jquery.min.js"
+			target="head" />
+		<h:outputScript library="primefaces" name="js/jquery-ui.min.js"
+			target="head" />
+
+	</h:head>
+	<h:body>
+		<div id="statusIndicator">
+			<p:ajaxStatus style="width:16px;height:16px;">
+				<f:facet name="start">
+					<h:outputText value="Loading..." />
+					<h:graphicImage value="/images/loading.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+		</div>
+		
+		<div id="header">
+			<ui:include src="/common/header.xhtml" />
+		</div>
+		<div id="left_menu">
+			<ui:include src="/common/leftMenu.xhtml" />
+		</div>
+		<div id="content">
+			 <ui:insert name="content" /> 
+		</div>
+		<div id="footer">
+			<ui:include src="/common/footer.xhtml" />
+		</div>
+
+		<!-- AngularJs -->
+		<script src="#{request.contextPath}/js/angular/angular.min.js"></script>
+		<script src="#{request.contextPath}/js/angular/angular-animate.min.js"></script>
+		<script src="#{request.contextPath}/js/angular/angular-aria.min.js"></script>
+		<script
+			src="#{request.contextPath}/js/angular/angular-messages.min.js"></script>
+		<script
+			src="#{request.contextPath}/js/angular/angular-resource.min.js"></script>
+		<script src="#{request.contextPath}/js/angular/angular-route.min.js"></script>
+		<script src="#{request.contextPath}/js/angular/angular-cookies.js"></script>
+
+		<!-- noti -->
+		<script src="#{request.contextPath}/js/lodash.js"></script>
+		<script src="#{request.contextPath}/js/sockjs.js"></script>
+		<script src="#{request.contextPath}/js/stomp.js"></script>
+
+		<!-- appjs -->
+		<script src="#{request.contextPath}/js/app/app.js"></script>
+		<script src="#{request.contextPath}/js/app/controllers.js"></script>
+		<script src="#{request.contextPath}/js/app/services.js"></script>
+		
+		<!-- Custom -->
+		<script src="#{request.contextPath}/js/custom.js"></script>
+	</h:body>
+</f:view>

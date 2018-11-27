@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/standardLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="userUpdateCompleteForm"
+			enctype="multipart/form-data">
+			<h1>
+				<h:outputText value="#{label['user_update_complete']}" />
+			</h1>
+			<p:messages globalOnly="true" showDetail="false" showSummary="true"
+				autoUpdate="true" />
+			<p:separator></p:separator>
+			<p:panelGrid id="basicInformationGrid" columns="2"
+				columnClasses="width-30, width-70" layout="grid">
+
+				<p:outputLabel
+					value="#{label['user_id']}" />
+				<h:outputText id="userid"
+					value="#{userRegisterUpdateCompleteAction.user.userId}" />
+
+				<p:outputLabel
+					value="#{label['user_name']}" />
+				<h:outputText id="username"
+					value="#{userRegisterUpdateCompleteAction.user.userName}" />
+
+				<p:outputLabel
+					value="#{label['user_gender']}" />
+				<h:outputText id="gender"
+					value="#{userRegisterUpdateCompleteAction.user.genderlbl}" />
+
+				<p:outputLabel value="#{label['user_role']}" />
+				<h:outputText id="role"
+					value="#{userRegisterUpdateCompleteAction.user.rolelbl}" />
+
+				<p:outputLabel
+					value="#{label['user_position']}" />
+				<h:outputText id="position"
+					value="#{userRegisterUpdateCompleteAction.user.position}" />
+
+				<p:outputLabel value="#{label['user_description']}" />
+				<h:outputText id="description"
+					value="#{userRegisterUpdateCompleteAction.user.description}" />
+
+				<p:outputLabel
+					value="#{label['user_address']}" />
+				<h:outputText id="address"
+					value="#{userRegisterUpdateCompleteAction.user.address}" />
+					<c:set target="#{flash}" property="user" value="#{userRegisterUpdateCompleteAction.user}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/standardLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="userRegistrationForm" >
+			<h1 style="color:#006ECC">
+				<h:outputText  value="Movie Review" />
+			</h1>
+			 <p:messages globalOnly="true" showDetail="true"  autoUpdate="true" closable="true" />
+			<p:separator styleClass="color:#006ECC"></p:separator>
+			<br></br>
+			<p:panelGrid id="basicInformationGrid" columns="2"
+				columnClasses="width-20, width-80" layout="grid">
+
+		
+				
+					<p:outputLabel value="Enter Movie Review" />
+				<h:panelGroup>
+					<p:inputTextarea id="review" rows="3" cols="50"
+						label="Address" autoResize="false" maxlength="500"
+						styleClass="width-60 text-area-noresize"
+						value="#{calculatePositiveNegativeAction.review}">
+						<f:validateLength maximum="500" />
+					</p:inputTextarea>
+					<p:message for="review" />
+				</h:panelGroup>														
+			</p:panelGrid>
+				<p:commandButton id="calculate"
+						value="Calculate"
+						update=":userRegistrationForm"
+						process="userRegistrationForm"
+						styleClass="btn"
+						action="#{calculatePositiveNegativeAction.calculate}" ajax="false" />
+					<p:spacer width="5"></p:spacer>
+					
+			<br></br>
+		</h:form>
+	</ui:define>
+</ui:composition>

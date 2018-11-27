@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:of="http://omnifaces.org/functions"
+	template="/error/messageLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="systemErrorForm">
+			<h:outputText value="System Error !" styleClass="errorLabel" />
+			<h2>Please contact your system administrator.</h2>
+			<ul>
+				<li>Date/time: #{of:formatDate(now, 'yyyy-MM-dd HH:mm:ss')}</li>
+				<li>User agent: #{header['user-agent']}</li>
+				<li>User IP: #{empty header['x-forwarded-for'] ?
+					request.remoteAddr : fn:split(header['x-forwarded-for'], ',')[0]}</li>
+				<li>Request URI: <a
+					href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a></li>
+				<li>Ajax request: #{facesContext.partialViewContext.ajaxRequest
+					? 'Yes' : 'No'}</li>
+				<li>Status code:
+					#{requestScope['javax.servlet.error.status_code']}</li>
+				<li>Exception type: <code>#{requestScope['javax.servlet.error.exception_type']}</code></li>
+				<li>Exception message: <code>#{requestScope['javax.servlet.error.message']}</code></li>
+				<li>Stack trace:
+					<p>
+						<code>#{of:printStackTrace(requestScope['javax.servlet.error.exception'])}</code>
+					</p>
+				</li>
+			</ul>
+		</h:form>
+	</ui:define>
+</ui:composition>

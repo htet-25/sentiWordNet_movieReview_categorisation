@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/standardLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="userUpdateForm" >
+			<h1 style="color:#006ECC">
+				<h:outputText  value="#{label['user_update_title']}" />
+			</h1>
+			 <p:messages globalOnly="true" showDetail="true" showSummary="true" autoUpdate="true" closable="true" />
+			<p:separator styleClass="color:#006ECC"></p:separator>
+			<br></br>
+			<p:panelGrid id="basicInformationGrid" columns="2"
+				columnClasses="width-30, width-80" layout="grid">
+
+				<p:outputLabel value="#{label['user_id']}"
+					styleClass="required" />
+				<h:panelGroup>
+					<p:inputText id="id" label="User id" required="true"
+						maxlength="50" styleClass="width-30"
+						value="#{userUpadatAction.userData.userId}">
+						<f:validateLength maximum="50" />
+					</p:inputText>
+					<p:message for="id" />
+				</h:panelGroup>
+
+				<p:outputLabel value="#{label['user_name']}" />
+				<h:panelGroup>
+					<p:inputText id="name" label="User name" maxlength="50"
+						styleClass="width-30"
+						value="#{userUpadatAction.userData.userName}">
+						<f:validateLength maximum="50" />
+					</p:inputText>
+					<p:message for="name" />
+				</h:panelGroup>
+
+				<p:outputLabel value="#{label['user_gender']}"
+					styleClass="required" />
+				<h:panelGroup>
+					<p:selectOneMenu id="gender" label="Gender" required="true"
+						styleClass="selectBox-width-26"
+						value="#{userUpadatAction.userData.gender}">
+						<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true"/>
+						<f:selectItems value="#{userUpadatAction.genderList}"
+							var="gender" itemLabel="#{gender.label}"
+							itemValue="#{gender.value}" />
+					</p:selectOneMenu>
+					<p:message for="gender" />
+				</h:panelGroup>
+				
+					<p:outputLabel value="#{label['user_role']}"
+					styleClass="required" />
+				<h:panelGroup>
+					<p:selectOneMenu id="role" label="Role" required="true"
+						styleClass="selectBox-width-26"
+						value="#{userUpadatAction.userData.role}">
+						<f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{userUpadatAction.roleList}"
+							var="role" itemLabel="#{role.label}"
+							itemValue="#{role.value}" />
+					</p:selectOneMenu>
+					<p:message for="role" />
+				</h:panelGroup>
+				
+
+				<p:outputLabel value="#{label['user_position']}"
+					styleClass="required" />
+				<h:panelGroup>
+					<p:inputText id="position" label="Position" maxlength="50"
+						styleClass="width-30"
+						value="#{userUpadatAction.userData.position}">
+						<f:validateLength maximum="50" />
+					</p:inputText>
+					<p:message for="position" />
+				</h:panelGroup>
+
+				<p:outputLabel value="#{label['user_description']}" />
+				<h:panelGroup>
+					<p:inputTextarea id="description" rows="3" cols="50"
+						label="Description" autoResize="false" maxlength="500"
+						styleClass="width-60 text-area-noresize"
+						value="#{userUpadatAction.userData.description}">
+						<f:validateLength maximum="500" />
+					</p:inputTextarea>
+					<p:message for="description" />
+				</h:panelGroup>
+				
+					<p:outputLabel value="#{label['user_address']}" />
+				<h:panelGroup>
+					<p:inputTextarea id="address" rows="3" cols="50"
+						label="Address" autoResize="false" maxlength="500"
+						styleClass="width-60 text-area-noresize"
+						value="#{userUpadatAction.userData.address}">
+						<f:validateLength maximum="500" />
+					</p:inputTextarea>
+					<p:message for="address" />
+				</h:panelGroup>				
+			</p:panelGrid>
+			
+			<p:commandButton id="register"
+						value="Update"
+						
+						styleClass="btn"
+						action="#{userUpadatAction.update()}" ajax="false" />
+					<p:spacer width="2"></p:spacer>
+					<p:commandButton id="reset"
+						value="#{label['user_Reset']}"
+						action="#{userUpadatAction.init()}" 
+						styleClass="btn"
+						update=":userUpdateForm" immediate="true" ajax="false">
+						<p:resetInput target="@form" />
+					</p:commandButton>
+					<p:spacer width="2"></p:spacer>
+					<p:commandButton id="backBtn"
+						value="Back"
+						styleClass="btn"
+						immediate="true"
+						action="UserSearch">
+					</p:commandButton>
+					<c:set target="#{flash}" property="userId" value="#{userUpadatAction.userID}" />
+			<br></br>
+		</h:form>
+	</ui:define>
+</ui:composition>

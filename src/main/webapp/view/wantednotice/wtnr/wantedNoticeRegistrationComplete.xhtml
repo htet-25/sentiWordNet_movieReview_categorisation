@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+
+		<h:form id="wantedNoticeRegisterCompleteForm">
+			<h1><h:outputText value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_TITLE']}" /></h1>
+			<p:messages globalOnly="true" showDetail="false" showSummary="true" />
+
+			<p:panelGrid columns="2" columnClasses="width-20, column-width-80"
+				layout="grid">
+
+				<p:outputLabel for="wantedPersonId" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_ID']}" />
+				<h:outputText id="wantedPersonId"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.wantedPersonId}" />
+
+				<p:outputLabel for="caseNo" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_CASE_NO']}" />
+				<h:outputText id="caseNo"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.caseNo != null ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.caseNo : '-'}" />
+
+				<p:outputLabel for="name" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_NAME']}" />
+				<h:outputText id="name"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.nameEn}" />
+
+				<p:outputLabel for="nrcNo" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_NRC_NO']}" />
+				<h:outputText id="nrcNo"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.nrcNoEn ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.nrcNoEn : '-'}" />
+
+				<p:outputLabel for="fatherName" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_FATHER_NAME']}" />
+				<h:outputText id="fatherName"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.fatherNameEn ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.fatherNameEn : '-'}" />
+
+				<p:outputLabel for="dateOfBirth" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_DATE_OF_BIRTH']}" />
+				<h:outputText id="dateOfBirth"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.dateOfBirth != null ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.dateOfBirth : '-'}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+				<p:outputLabel for="gender" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_GENDER']}" />
+				<h:outputText id="gender"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.genderLabel}" />
+
+				<p:outputLabel for="maritalStatus" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_MARITAL_STATUS']}" />
+				<h:outputText id="maritalStatus"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.maritalStatusLabel != null ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.maritalStatusLabel : '-'}" />
+
+				<p:outputLabel for=" message" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_MESSAGE']}" />
+				<h:outputText id="message" rows="5" cols="50"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.messageEn}" />
+
+				<p:outputLabel for="weight" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_WEIGHT']}"  />
+				<h:panelGroup>
+					<h:outputText id="weight"
+						value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.weight != null ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.weight : '-'}" />
+					<h:outputText value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_LBS']}"
+						rendered="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.weight ne null}" />
+				</h:panelGroup>
+
+				<p:outputLabel for="Height" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_HEIGHT']}" />
+				<h:panelGroup>
+					<h:outputText id="Height"
+						value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.feet} #{label['WANTED_NOTICE_REGISTRATION_COMPLETE_FEET']} "
+						rendered="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.feet ne null}" />
+					<h:outputText
+						value="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.inches} #{label['WANTED_NOTICE_REGISTRATION_COMPLETE_INCHES']}"
+						rendered="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.inches ne null}" />
+					<c:if test="#{wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.height eq null}">
+					-
+					</c:if>
+				</h:panelGroup>
+
+				<p:outputLabel for="race" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_RACE']}" />
+				<h:outputText id="race"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.raceEn ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.raceEn : '-'}" />
+
+				<p:outputLabel for="religion" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_RELIGION']}" />
+				<h:outputText id="religion"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.religionEn ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.religionEn : '-'}" />
+
+				<p:outputLabel for="nationality" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_NATIONALITY']}" />
+				<h:outputText id="nationality"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.nationalityEn ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.nationalityEn : '-'}" />
+
+				<p:outputLabel for=" phoneNo" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_PHONE_NO']}" />
+				<h:outputText id="phoneNo"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.phoneNo ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.phoneNo : '-'}" />
+
+				<p:outputLabel for="address" value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_ADDRESS']}" />
+				<h:outputText id="address" rows="5" cols="50"
+					value="#{not empty wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.addressEn ? wantedNoticeRegisterCompleteActionBean.wantedNoticeDto.addressEn : '-'}" />
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_REGISTRATION_COMPLETE_ATTACHMENT_FILE']}" />
+				<p:dataGrid columns="3"
+					value="#{wantedNoticeRegisterCompleteActionBean.wantedAttachmentDtoList}"
+					var="wantedAttachmentDto" varStatus="status">
+					<p:commandLink oncomplete="PF('imageDialog').show()"
+						update=":imageDialogForm"
+						actionListener="#{wantedNoticeRegisterCompleteActionBean.openDialog(wantedAttachmentDto)}">
+						<p:graphicImage value="#{wantedAttachmentDto.path}" width="100px"
+							height="100px" />
+						<h:outputText value="&#160;" />
+					</p:commandLink>
+				</p:dataGrid>
+
+			</p:panelGrid>
+		</h:form>
+
+		<h:form id="imageDialogForm">
+			<p:dialog widgetVar="imageDialog" id="imageDialog" resizable="false"
+				draggable="false" width="100%" height="100%"
+				style="top:0px;bottom:0px; background: rgba(0, 0, 0, .9);"
+				header="#{wantedNoticeRegisterCompleteActionBean.fileName}">
+				<input type="hidden" value="#{flash.keep.wantedNoticeDto}" />
+				<input type="hidden" value="#{flash.setKeepMessages(true)}" />
+				<div style="text-align: center;">
+					<p:graphicImage
+						value="#{wantedNoticeRegisterCompleteActionBean.imagePath}"
+						styleClass="img" />
+				</div>
+				<div class="arrow">
+					<p:commandLink  id="previous"
+						oncomplete="PF('imageDialog').show()" update=":imageDialogForm"
+						actionListener="#{wantedNoticeRegisterCompleteActionBean.showPreviousPhoto()}">
+						<img src="/anti-criminal/images/previous.png"/>
+					</p:commandLink>
+					<p:commandLink id="next" oncomplete="PF('imageDialog').show()"
+						update=":imageDialogForm"
+						actionListener="#{wantedNoticeRegisterCompleteActionBean.showNextPhoto()}">
+						<img src="/anti-criminal/images/next.png"/>
+					</p:commandLink>
+				</div>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

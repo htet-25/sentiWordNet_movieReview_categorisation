@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<div class="leftpanel">
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a class="parent"> 
+						<i class="fa fa-cloud">
+						</i>
+						<span>
+							<h:outputText value="Movie Review" />
+						</span>
+					</a>
+				</li>
+				<li>
+					<p:commandLink immediate="true" class="child" action="userRegister">
+						<i class="fa fa-edit"></i>
+						<span><h:outputText value="Calculate Review" /> </span>
+					</p:commandLink>
+				</li>
+				
+			</ul>
+		</div>
+		<!-- leftpanel -->
+	</h:form>
+</ui:composition>

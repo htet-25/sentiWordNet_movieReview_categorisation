@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="wantedNoticeSearchForm">
+			<h1><h:outputText value="#{label['WANTED_NOTICE_SEARCH_TITLE']}" /></h1>
+
+			<p:panelGrid id="searchpanelGrid" columns="4"
+				columnClasses="width-20, width-25, width-20, width-35" layout="grid">
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_SEARCH_ID']}" />
+				<p:inputText id="wantedPersonId"
+					value="#{wantedNoticeSearchActionBean.wantedNoticeSearchDto.wantedPersonId}"
+					maxlength="13" styleClass="width-100" />
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_SEARCH_NAME']}" />
+				<p:inputText id="name"
+					value="#{wantedNoticeSearchActionBean.wantedNoticeSearchDto.name}"
+					maxlength="50" styleClass="width-67" />
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_SEARCH_CASE_NO']}" />
+				<p:inputText id="caseNo"
+					value="#{wantedNoticeSearchActionBean.wantedNoticeSearchDto.caseNo}"
+					maxlength="10" styleClass="width-100" />
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_SEARCH_NRC_NO']}" />
+				<p:inputText id="nrcNo"
+					value="#{wantedNoticeSearchActionBean.wantedNoticeSearchDto.nrcNo}"
+					maxlength="22" styleClass="width-67" />
+
+
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_SEARCH_ANNOUNCED_DATE_FROM']}" />
+				<p:calendar id="announcedDateFrom"
+					value="#{wantedNoticeSearchActionBean.wantedNoticeSearchDto.announcedDateFrom}"
+					navigator="true" pattern="dd/MM/yyyy" maxlength="10"
+					styleClass="date-width-100" />
+
+				<p:outputLabel value="#{label['WANTED_NOTICE_SEARCH_ANNOUNCED_DATE_TO']}" />
+				<p:calendar id="announcedDateTo"
+					value="#{wantedNoticeSearchActionBean.wantedNoticeSearchDto.announcedDateTo}"
+					navigator="true" pattern="dd/MM/yyyy" maxlength="10"
+					styleClass="date-width-67" />
+				<p:outputLabel />
+
+				<h:panelGroup>
+					<p:commandButton id="search" value="#{label['WANTED_NOTICE_SEARCH_SEARCH']}"
+						update=":wantedNoticeSearchForm"
+						actionListener="#{wantedNoticeSearchActionBean.search('wantedNoticeSearchForm:wantedNoticeSearchTable')}" />
+					<p:spacer width="5"></p:spacer>
+					<p:commandButton id="reset" value="#{label['WANTED_NOTICE_SEARCH_RESET']}"
+						update=":wantedNoticeSearchForm"
+						actionListener="#{wantedNoticeSearchActionBean.reset('wantedNoticeSearchForm:wantedNoticeSearchTable')}" />
+				</h:panelGroup>
+				<p:outputLabel />
+				<p:outputLabel />
+
+			</p:panelGrid>
+			<p:messages globalOnly="true" showDetail="false" showSummary="true" />
+			<h2><h:outputText value="#{label['WANTED_NOTICE_SEARCH_LIST_TITLE']}" /></h2>
+			<p:dataTable id="wantedNoticeSearchTable" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rows="15" rowIndexVar="index"
+				rowsPerPageTemplate="10,15,20"
+				value="#{wantedNoticeSearchActionBean.wantedNoticeInfoListDataModel}"
+				var="wantedNoticeDto" widgetVar="wantedNoticeSearchTable">
+				<p:column headerText=" " styleClass="width-16">
+					<p:commandLink id="detail" value="#{label['WANTED_NOTICE_SEARCH_DETAIL']}"
+						action="#{wantedNoticeSearchActionBean.detail(wantedNoticeDto.wantedId)}" />
+					<p:spacer width="5"></p:spacer>
+					<p:commandLink id="edit" value="#{label['WANTED_NOTICE_SEARCH_EDIT']}" rendered="#{wantedNoticeDto.createdBranchId eq wantedNoticeSearchActionBean.branchId}"
+						action="#{wantedNoticeSearchActionBean.edit(wantedNoticeDto.wantedId)}" />
+					<p:spacer width="5"></p:spacer>
+					<p:commandLink id="delete" value="#{label['WANTED_NOTICE_SEARCH_DELETE']}" rendered="#{wantedNoticeDto.createdBranchId eq wantedNoticeSearchActionBean.branchId}"
+						action="#{wantedNoticeSearchActionBean.delete(wantedNoticeDto.wantedId)}" />
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_ID']}" styleClass="width-16">
+					<h:outputText value="#{wantedNoticeDto.wantedPersonId}" />
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_CASE_NO']}" styleClass="width-12">
+					<h:outputText value="#{wantedNoticeDto.caseNo}" />
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_NAME']}" styleClass="width-18">
+					<h:outputText value="#{wantedNoticeDto.name}" />
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_NRC_NO']}" styleClass="width-20">
+					<h:outputText value="#{wantedNoticeDto.nrcNo}" />
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_GENDER']}" styleClass="width-8">
+					<h:outputText value="#{wantedNoticeDto.genderLabel}" />
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_ANNOUNCED_DATE']}" styleClass="width-14">
+					<h:outputText value="#{wantedNoticeDto.createdDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{label['WANTED_NOTICE_SEARCH_LIST_MESSAGE']}" styleClass="width-26">
+					<h:outputText id="message"
+						value="#{fn:substring(wantedNoticeDto.message,0,60)}" />
+					<p:tooltip for="message" value="#{wantedNoticeDto.message}"></p:tooltip>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

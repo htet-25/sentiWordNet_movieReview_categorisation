@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/security http://www.springframework.org/schema/integration/security/spring-integration-security-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/faces http://www.springframework.org/schema/faces/spring-faces-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+		
+	<context:component-scan base-package="com.tfmm.anticriminal" />
+	<context:annotation-config />
+	
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+	<websocket:message-broker
+		application-destination-prefix="/app,/sockjs">
+		<websocket:stomp-endpoint path="/receiveReport">
+			<websocket:sockjs />
+		</websocket:stomp-endpoint>
+
+		<websocket:simple-broker prefix="/report/,/queue" />
+	</websocket:message-broker>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/</value>
+		</property>
+		<property name="suffix">
+			<value>.xhtml</value>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<util:properties id="SQL_ERROR_CODE"
+		location="classpath:SQL_ERROR_CODE.properties" />
+
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="dataSourceProperties">
+			<props>
+				<prop key="url">jdbc:mysql://localhost:3306/crm?useUnicode=yes&amp;characterEncoding=UTF-8
+				</prop>
+				<prop key="user">root</prop>
+				<prop key="password">htetaungnaing</prop>
+				<prop key="prepStmtCacheSize">250</prop>
+				<prop key="prepStmtCacheSqlLimit">2048</prop>
+				<prop key="cachePrepStmts">true</prop>
+				<prop key="useServerPrepStmts">true</prop>
+			</props>
+		</property>
+		<property name="dataSourceClassName"
+			value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+		<property name="maximumPoolSize" value="10" />
+		<property name="maxLifetime" value="30000" />
+		<property name="idleTimeout" value="30000" />
+	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!-- define the SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tfmm.**.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+	<!-- Scheduled config -->
+	<task:scheduled-tasks scheduler="synchronizeConfig">
+	    <task:scheduled ref="fileDeleteTriggerJob" method="deleteFileTrigger" cron="0 0 12 * * ?" />
+	    
+	    <task:scheduled ref="reportDataSynchronizeTriggerJob" method="syncReport" cron="0 0 00 * * ?" />
+	    <task:scheduled ref="wantedNoticeSynchronizeTriggerJob" method="syncWanted" cron="0 30 12 * * ?" />
+	</task:scheduled-tasks>
+	
+	<task:scheduler id="synchronizeConfig"/>
+	
+</beans>
