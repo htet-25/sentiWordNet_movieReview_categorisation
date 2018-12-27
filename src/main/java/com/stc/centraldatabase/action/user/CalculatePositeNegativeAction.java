@@ -50,7 +50,7 @@ public class CalculatePositeNegativeAction implements Serializable{
 	
 	public String calculate() throws ClassNotFoundException, IOException
 	{
-		String ans = null;
+		
 		String roothpath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/")+"models/english-left3words-distsim.tagger";
 		int totalpcount = 0;
 		int totalncount = 0;
