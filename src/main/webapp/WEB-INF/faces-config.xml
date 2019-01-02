@@ -41,41 +41,16 @@
 		</navigation-case>
 		
 		<navigation-case>
-			<from-outcome>userRegister</from-outcome>
-			<to-view-id>/view/user/userRegistration.xhtml</to-view-id>
+			<from-outcome>movieReview</from-outcome>
+			<to-view-id>/view/movie/MovieReview.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		
 		<navigation-case>
-			<from-outcome>userSearch</from-outcome>
-			<to-view-id>/view/user/userSearch.xhtml</to-view-id>
+			<from-outcome>aspectCategory</from-outcome>
+			<to-view-id>/view/movie/AspectWordView.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-		
-		<navigation-case>
-			<from-outcome>userSearch</from-outcome>
-			<to-view-id>/view/user/userSearch.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		
-			<navigation-case>
-				<from-outcome>UserUpdate</from-outcome>
-				<to-view-id>/view/user/userRegistrationUpdate.xhtml</to-view-id>
-				<redirect />
-			</navigation-case>
-			
-			<navigation-case>
-				<from-outcome>PasswordChange</from-outcome>
-				<to-view-id>/view/user/passwordChange.xhtml</to-view-id>
-				<redirect />
-			</navigation-case>
-			
-			<navigation-case>
-				<from-outcome>userDetail</from-outcome>
-				<to-view-id>/view/user/userDetailView.xhtml</to-view-id>
-				<redirect />
-			</navigation-case>
-		
 	
 	</navigation-rule>
 </faces-config>

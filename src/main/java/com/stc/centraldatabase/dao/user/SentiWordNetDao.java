@@ -21,7 +21,6 @@ public class SentiWordNetDao {
 			Statement st = con.createStatement();
 			 ResultSet rs = st.executeQuery("Select * from senti_wordnet where synset_terms like '%"+word+"%'");
 
-
 			while (rs.next()) {
 				SentiWordNet sentiwordnet = new SentiWordNet();
 				sentiwordnet.setId(rs.getInt("id"));
