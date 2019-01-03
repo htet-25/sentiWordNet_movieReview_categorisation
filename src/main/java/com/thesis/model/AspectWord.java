@@ -1,4 +1,4 @@
-package com.stc.centraldatabase.model.user;
+package com.thesis.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 

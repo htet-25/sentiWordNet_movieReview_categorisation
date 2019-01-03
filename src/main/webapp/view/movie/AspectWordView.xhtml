@@ -7,7 +7,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	template="/common/standardLayout.xhtml">
 	<ui:define name="content">
-		<h:form id="userRegistrationForm" >
+		<h:form id="aspectRegistrationForm" >
 			<h1 style="color:#006ECC">
 				<h:outputText  value="Aspect Word Entry" />
 			</h1>
@@ -15,23 +15,34 @@
 			<p:separator styleClass="color:#006ECC"></p:separator>
 			<br></br>
 			<p:panelGrid id="basicInformationGrid" columns="2"
-				columnClasses="width-20, width-80" layout="grid">
+				columnClasses="width-30, width-70" layout="grid">
 
 		
 				
 					<p:outputLabel value="Aspect Category" />
 				<h:panelGroup>
 				<p:selectOneMenu id="category" value="#{aspectWordDataAction.selectedcategory}" style="width:150px">
+				 <p:ajax listener="#{aspectWordDataAction.onCountryChange}" update="aspectword" />
                 <f:selectItem itemLabel="Select Category" itemValue="" noSelectionOption="true" />
                 <f:selectItems value="#{aspectWordDataAction.aspectCategory}" />
             	</p:selectOneMenu>
 					<p:message for="category" />
+				</h:panelGroup>
+				<p:outputLabel value="Enter Aspect Words(seperated by comma)" />
+				<h:panelGroup>
+					<p:inputTextarea id="aspectword" rows="3" cols="50"
+						label="Address" autoResize="false" maxlength="500"
+						styleClass="width-60 text-area-noresize"
+						value="#{aspectWordDataAction.aspectWord}">
+						<f:validateLength maximum="5000" />
+					</p:inputTextarea>
+					<p:message for="aspectword" />
 				</h:panelGroup>														
 			</p:panelGrid>
 				<p:commandButton id="calculate"
 						value="Save"
-						update=":userRegistrationForm"
-						process="userRegistrationForm"
+						update="aspectRegistrationForm"
+						process="aspectRegistrationForm"
 						styleClass="btn"
 						action="#{aspectWordDataAction.calculate}" ajax="false" />
 					<p:spacer width="5"></p:spacer>

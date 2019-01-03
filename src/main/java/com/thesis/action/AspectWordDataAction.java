@@ -1,4 +1,4 @@
-package com.stc.centraldatabase.action.user;
+package com.thesis.action;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class AspectWordDataAction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	Map<String,String> aspectCategory;
-	String selectedcategory;
+	String selectedcategory = "0";
 	String aspectWord;
 	
 	 public String getSelectedcategory() {
@@ -29,15 +29,29 @@ public class AspectWordDataAction implements Serializable{
 		this.selectedcategory = selectedcategory;
 	}
 
+	public void onCategoryChange()
+	{
+		if(!aspectCategory.equals("0"))
+		{
+			
+		}
+	}
+	
+	public String saveAspectWords()
+	{
+		
+		return null;
+	}
+	
 	@PostConstruct
 	    public void init() {
 		 aspectCategory = new HashMap<String,String>();
-		 aspectCategory.put("1", "Screenplay");
-		 aspectCategory.put("2", "Music");
-		 aspectCategory.put("3", "Acting");
-		 aspectCategory.put("4", "Plot");
-		 aspectCategory.put("5", "Movie");
-		 aspectCategory.put("6", "Direction");
+		 aspectCategory.put("Screenplay", "1");
+		 aspectCategory.put("Music", "2");
+		 aspectCategory.put("Acting", "3");
+		 aspectCategory.put("Plot", "4");
+		 aspectCategory.put("Movie", "5");
+		 aspectCategory.put("Direction", "6");
 	 }
 
 	public Map<String, String> getAspectCategory() {

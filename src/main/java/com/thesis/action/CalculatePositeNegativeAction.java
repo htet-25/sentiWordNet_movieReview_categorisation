@@ -1,4 +1,4 @@
-package com.stc.centraldatabase.action.user;
+package com.thesis.action;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -10,9 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import com.stc.centraldatabase.dao.user.SentiWordNetDao;
-import com.stc.centraldatabase.model.user.SentiWordNet;
-import com.stc.centraldatabase.model.user.Word;
+import com.thesis.dao.SentiWordNetDao;
+import com.thesis.model.SentiWordNet;
+import com.thesis.model.Word;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 

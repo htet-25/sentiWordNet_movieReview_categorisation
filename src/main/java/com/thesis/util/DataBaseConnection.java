@@ -1,4 +1,4 @@
-package com.stc.centraldatatbase.util;
+package com.thesis.util;
 
 
 	import java.io.FileInputStream;

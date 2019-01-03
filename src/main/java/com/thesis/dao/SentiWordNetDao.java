@@ -1,4 +1,4 @@
-package com.stc.centraldatabase.dao.user;
+package com.thesis.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.stc.centraldatabase.model.user.SentiWordNet;
-import com.stc.centraldatatbase.util.DataBaseConnection;
+import com.thesis.model.SentiWordNet;
+import com.thesis.util.DataBaseConnection;
 
 
 public class SentiWordNetDao {
