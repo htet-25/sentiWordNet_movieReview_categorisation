@@ -10,9 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import com.thesis.dao.SentiWordNetDao;
-import com.thesis.model.SentiWordNet;
 import com.thesis.model.Word;
+import com.thesis.service.CalculatePositiveNegativeService;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
@@ -52,7 +51,6 @@ public class CalculatePositeNegativeAction implements Serializable{
 	{
 		
 		String roothpath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/")+"models/english-left3words-distsim.tagger";
-		int totalpcount = 0;
 		int totalncount = 0;
 		MaxentTagger tagger =  new MaxentTagger(roothpath);
 		String tagged = tagger.tagString(review);
@@ -71,32 +69,11 @@ public class CalculatePositeNegativeAction implements Serializable{
 				word.setWord(w[0]);
 				worddatalist.add(word);
 			}
-			for (Word word : worddatalist) {
-				SentiWordNetDao wordnetDao = new SentiWordNetDao();
-				ArrayList<SentiWordNet> wordnetList = wordnetDao.getWordList(word.getWord());
-				for (SentiWordNet sentiWordNet : wordnetList) {
-					String[] originalwords = sentiWordNet.getTerms().split(" ");
-				
-						for(int j=0; j<originalwords.length; j++)
-						{
-							String[] originalword = originalwords[j].split("#");
-							if(word.getWord().equals(originalword[0]))
-							{
-								if(!sentiWordNet.getNescore().equals("0") || !sentiWordNet.getPoscore().equals("0"))
-								{
-									if(Double.parseDouble(sentiWordNet.getNescore()) > Double.parseDouble(sentiWordNet.getPoscore()))
-									{
-										totalncount += 1;	
-									}else if(Double.parseDouble(sentiWordNet.getPoscore()) > Double.parseDouble(sentiWordNet.getNescore()))
-									{
-										totalpcount += 1;
-									}
-								}
-								break;
-							}
-						}				
-				}
-			}
+		if(worddatalist.size() > 0)
+		{
+			CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
+			totalncount = calculateservice.getReviewWordCount(worddatalist);
+		}
 			
 		}
 		if(totalncount>0)
@@ -118,7 +95,7 @@ public class CalculatePositeNegativeAction implements Serializable{
 		MaxentTagger tagger =  new MaxentTagger(roothpath);
 		String tagged = tagger.tagString(a);
 		System.out.println(tagged);*/
-		//String taggedStr = tagger.tagString("The “Java Decompiler project” aims to develop tools in order to decompile and analyze");
+		//String taggedStr = tagger.tagString("The ï¿½Java Decompiler projectï¿½ aims to develop tools in order to decompile and analyze");
 	
 
 	}

@@ -5,8 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import com.thesis.model.AspectWord;
+import com.thesis.service.AspectWordService;
 
 @ManagedBean(name = "aspectWordDataAction")
 @ViewScoped
@@ -31,16 +36,36 @@ public class AspectWordDataAction implements Serializable{
 
 	public void onCategoryChange()
 	{
+		AspectWordService asService = new AspectWordService();
+		
 		if(!aspectCategory.equals("0"))
 		{
-			
-		}
+			aspectWord = asService.getWordsByCategory(Integer.parseInt(selectedcategory));
+		}else
+			aspectWord = "";
+		
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("wordList", aspectWord);
+		
+	
 	}
 	
 	public String saveAspectWords()
 	{
+		AspectWord asWord = new AspectWord();
+		AspectWordService asService = new AspectWordService();
+		boolean flag = false;
 		
-		return null;
+		asWord.setAspectWord(aspectWord);
+		asWord.setType(Integer.parseInt(selectedcategory));
+		flag = asService.insertAspectWord(asWord);
+		
+		if(flag)
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "Save Successfully"));
+			return null;
+		}						
+		else return null;
+	
 	}
 	
 	@PostConstruct
@@ -52,6 +77,7 @@ public class AspectWordDataAction implements Serializable{
 		 aspectCategory.put("Plot", "4");
 		 aspectCategory.put("Movie", "5");
 		 aspectCategory.put("Direction", "6");
+		 this.selectedcategory = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("wordList");
 	 }
 
 	public Map<String, String> getAspectCategory() {

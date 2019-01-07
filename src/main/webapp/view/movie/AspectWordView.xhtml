@@ -22,7 +22,7 @@
 					<p:outputLabel value="Aspect Category" />
 				<h:panelGroup>
 				<p:selectOneMenu id="category" value="#{aspectWordDataAction.selectedcategory}" style="width:150px">
-				 <p:ajax listener="#{aspectWordDataAction.onCountryChange}" update="aspectword" />
+				 <p:ajax listener="#{aspectWordDataAction.onCategoryChange}" update="aspectword" />
                 <f:selectItem itemLabel="Select Category" itemValue="" noSelectionOption="true" />
                 <f:selectItems value="#{aspectWordDataAction.aspectCategory}" />
             	</p:selectOneMenu>
@@ -30,8 +30,8 @@
 				</h:panelGroup>
 				<p:outputLabel value="Enter Aspect Words(seperated by comma)" />
 				<h:panelGroup>
-					<p:inputTextarea id="aspectword" rows="3" cols="50"
-						label="Address" autoResize="false" maxlength="500"
+					<p:inputTextarea id="aspectword" rows="8" cols="60"
+						label="Address" autoResize="false" maxlength="5000"
 						styleClass="width-60 text-area-noresize"
 						value="#{aspectWordDataAction.aspectWord}">
 						<f:validateLength maximum="5000" />
@@ -44,7 +44,7 @@
 						update="aspectRegistrationForm"
 						process="aspectRegistrationForm"
 						styleClass="btn"
-						action="#{aspectWordDataAction.calculate}" ajax="false" />
+						action="#{aspectWordDataAction.saveAspectWords}" ajax="false" />
 					<p:spacer width="5"></p:spacer>
 					
 			<br></br>

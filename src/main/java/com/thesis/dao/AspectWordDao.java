@@ -10,35 +10,28 @@ import com.thesis.util.DataBaseConnection;
 
 public class AspectWordDao {
 	
-	public String getWordsByCategory(int type)
+	public String getWordsByCategory(int type, Connection con) throws SQLException
 	{
 		String res = "";
-		Connection con = null;
-		con = DataBaseConnection.getConnection();
+	
 		Statement st;
-		try {
+	
 			st = con.createStatement();
 			ResultSet rs = st.executeQuery("Select aspect_word from aspect_word where category ="+type);
 
 			while (rs.next()) {
 				res = rs.getString("aspect_word");
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		return res;
 	}
 	
-	public  boolean insert(AspectWord aspectWord) {
-		Connection con = null;
+	public  boolean insert(AspectWord aspectWord,Connection con) throws SQLException {
 		PreparedStatement ps = null;
-		String query;
+		String query = "";
 		
-		try {
-			con = DataBaseConnection.getConnection();
-			     
+     
 			query = " insert into aspect_word (category, aspect_word) values (?,?)";
 			    	        
 			    int i = 1;
@@ -48,12 +41,7 @@ public class AspectWordDao {
 				ps.execute();				      
 			    con.close();
 			    return true;		
-		} catch (SQLException ex) {
-			System.out.println("doc Registration error -->" + ex.getMessage());
-			return false;
-		} finally {
-			DataBaseConnection.close(con);
-		}
+		
 	}
 
 }

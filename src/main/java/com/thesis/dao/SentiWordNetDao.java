@@ -12,7 +12,7 @@ import com.thesis.util.DataBaseConnection;
 
 public class SentiWordNetDao {
 	
-	public static ArrayList<SentiWordNet> getWordList(String word) {
+	public ArrayList<SentiWordNet> getWordList(String word) {
 		Connection con = null;
 		ArrayList<SentiWordNet>res = new ArrayList<>();
 		

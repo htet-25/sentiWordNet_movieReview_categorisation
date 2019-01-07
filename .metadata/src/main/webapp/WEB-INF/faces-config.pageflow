@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14588934901910" configfile="/movie_review/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="5080" id="pf14588937841471" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14588937841482 pf14878374988090 pf14883527930590 pf14883527930591 pf14883527930592 pf14883528880655 pf14883528880656 pf14883528880657 pf14883528880658" path="/*"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/home.xhtml" x="338" y="178" id="pf145889378414926" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14588937841482 pf14883527930590" path="/view/home.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/wantednotice/wtns/wantedNoticeDelete.xhtml" x="122" y="8005" id="pf145889378415048" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" path="/view/wantednotice/wtns/wantedNoticeDelete.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/login.xhtml" x="338" y="10546" id="pf14878374988101" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14878374988090" path="/view/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/user/userRegistration.xhtml" id="pf14883527930603" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf14883527930591" path="/view/movie/MovieReview.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/user/userSearch.xhtml" id="pf14883527930604" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf14883527930592 pf14883528880655" path="/view/user/userSearch.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/user/userRegistrationUpdate.xhtml" id="pf14883528880669" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf14883528880656" path="/view/user/userRegistrationUpdate.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/user/passwordChange.xhtml" id="pf148835288806610" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf14883528880657" path="/view/user/passwordChange.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="view/user/userDetailView.xhtml" id="pf148835288806611" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf14883528880658" path="/view/user/userDetailView.xhtml"/>
-  <links id="pf14588937841482" target="pf145889378414926" source="pf14588937841471" outcome="dashboard" redirect="true"/>
-  <links id="pf14878374988090" target="pf14878374988101" source="pf14588937841471" outcome="login" redirect="true"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="562" id="pf14588937841471" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14883527930590 pf14883527930591 pf15467089938660" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/home.xhtml" x="338" y="178" id="pf145889378414926" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14883527930590" path="/view/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/wantednotice/wtns/wantedNoticeDelete.xhtml" x="122" y="946" id="pf145889378415048" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" path="/view/wantednotice/wtns/wantedNoticeDelete.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/user/userRegistration.xhtml" x="338" y="946" id="pf14883527930603" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf14883527930591" path="/view/movie/MovieReview.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/user/userSearch.xhtml" x="122" y="1330" id="pf14883527930604" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" path="/view/user/userSearch.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/user/userRegistrationUpdate.xhtml" x="122" y="1714" id="pf14883528880669" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" path="/view/user/userRegistrationUpdate.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/user/passwordChange.xhtml" x="122" y="2098" id="pf148835288806610" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" path="/view/user/passwordChange.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/user/userDetailView.xhtml" x="122" y="2482" id="pf148835288806611" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" path="/view/user/userDetailView.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/movie/AspectWordView.xhtml" x="338" y="1330" id="pf15467089938671" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15467089938660" path="/view/movie/AspectWordView.xhtml"/>
   <links id="pf14883527930590" target="pf145889378414926" source="pf14588937841471" outcome="home" redirect="true"/>
   <links id="pf14883527930591" target="pf14883527930603" source="pf14588937841471" outcome="movieReview" redirect="true"/>
-  <links id="pf14883527930592" target="pf14883527930604" source="pf14588937841471" outcome="userSearch" redirect="true"/>
-  <links id="pf14883528880655" target="pf14883527930604" source="pf14588937841471" outcome="userSearch" redirect="true"/>
-  <links id="pf14883528880656" target="pf14883528880669" source="pf14588937841471" outcome="UserUpdate" redirect="true"/>
-  <links id="pf14883528880657" target="pf148835288806610" source="pf14588937841471" outcome="PasswordChange" redirect="true"/>
-  <links id="pf14883528880658" target="pf148835288806611" source="pf14588937841471" outcome="userDetail" redirect="true"/>
+  <links id="pf15467089938660" target="pf15467089938671" source="pf14588937841471" outcome="aspectCategory" redirect="true"/>
 </pageflow:Pageflow>
