@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import com.thesis.model.AspectWord;
-import com.thesis.util.DataBaseConnection;
 
 public class AspectWordDao {
 	
@@ -24,6 +25,27 @@ public class AspectWordDao {
 			}
 		
 		
+		return res;
+	}
+	
+	public ArrayList<AspectWord> getAll(Connection con) throws SQLException
+	{
+		 ArrayList<AspectWord> res = new ArrayList<>();
+	
+		Statement st;
+	
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery("Select * from aspect_word");
+
+			while (rs.next()) 
+			{
+				AspectWord aspectword = new AspectWord();
+				aspectword.setId(rs.getInt("id"));
+				aspectword.setAspectWord(rs.getString("aspect_word"));
+				aspectword.setType(rs.getInt("category"));
+				res.add(aspectword);
+			}
+				
 		return res;
 	}
 	

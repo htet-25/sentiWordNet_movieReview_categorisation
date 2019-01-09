@@ -7,17 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.thesis.model.SentiWordNet;
-import com.thesis.util.DataBaseConnection;
 
 
 public class SentiWordNetDao {
 	
-	public ArrayList<SentiWordNet> getWordList(String word) {
-		Connection con = null;
+	public ArrayList<SentiWordNet> getWordList(String word , Connection con) throws SQLException {
 		ArrayList<SentiWordNet>res = new ArrayList<>();
-		
-		try {
-			con = DataBaseConnection.getConnection();
+
 			Statement st = con.createStatement();
 			 ResultSet rs = st.executeQuery("Select * from senti_wordnet where synset_terms like '%"+word+"%'");
 
@@ -30,10 +26,7 @@ public class SentiWordNetDao {
 				res.add(sentiwordnet);	
 			}
 			return res;
-		} catch (SQLException ex) {
-			System.out.println("Login error -->" + ex.getMessage());
-			return res;
-		}
+		
 	}
 	
 }

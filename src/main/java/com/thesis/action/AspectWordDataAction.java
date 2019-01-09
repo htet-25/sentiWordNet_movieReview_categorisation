@@ -25,6 +25,8 @@ public class AspectWordDataAction implements Serializable{
 	Map<String,String> aspectCategory;
 	String selectedcategory = "0";
 	String aspectWord;
+
+	
 	
 	 public String getSelectedcategory() {
 		return selectedcategory;

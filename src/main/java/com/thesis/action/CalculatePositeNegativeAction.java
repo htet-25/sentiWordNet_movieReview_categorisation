@@ -3,6 +3,9 @@ package com.thesis.action;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -11,6 +14,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.thesis.model.Word;
+import com.thesis.service.AspectWordService;
 import com.thesis.service.CalculatePositiveNegativeService;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
@@ -27,9 +31,9 @@ public class CalculatePositeNegativeAction implements Serializable{
 	private static final long serialVersionUID = -8960748410953236774L;
 	
 	String review;
-	
-	
-
+	int type = 0;
+	Map<String,String> aspectCategory;
+	String categorytype = "";
 
 
 
@@ -44,7 +48,13 @@ public class CalculatePositeNegativeAction implements Serializable{
 	@PostConstruct
 	public void init()  
 	{
-	
+		 aspectCategory = new HashMap<String,String>();
+		 aspectCategory.put("Screenplay", "1");
+		 aspectCategory.put("Music", "2");
+		 aspectCategory.put("Acting", "3");
+		 aspectCategory.put("Plot", "4");
+		 aspectCategory.put("Movie", "5");
+		 aspectCategory.put("Direction", "6");
 	}
 	
 	public String calculate() throws ClassNotFoundException, IOException
@@ -58,34 +68,67 @@ public class CalculatePositeNegativeAction implements Serializable{
 		
 		if(!tagged.equals(""))
 		{
-			ArrayList<Word> worddatalist = new ArrayList<>();
-			tagged = tagged.toLowerCase();
-			String[]wordlist = tagged.split(" ");
-			for(int i=0; i<wordlist.length; i++)
+				ArrayList<Word> worddatalist = new ArrayList<>();
+				tagged = tagged.toLowerCase();
+				String[]wordlist = tagged.split(" ");
+				for(int i=0; i<wordlist.length; i++)
+				{
+					Word word = new Word();
+					String [] w = wordlist[i].split("/");
+					word.setGrammar(w[1]);
+					word.setWord(w[0]);
+					worddatalist.add(word);
+				}
+			if(worddatalist.size() > 0)
 			{
-				Word word = new Word();
-				String [] w = wordlist[i].split("/");
-				word.setGrammar(w[1]);
-				word.setWord(w[0]);
-				worddatalist.add(word);
+				ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist);
+				if(aspectwordList.size() > 0)
+				{
+					AspectWordService aspectService = new AspectWordService();
+					type = aspectService.getCategorytypeByMaxWord(aspectwordList);
+				}
+				CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
+				totalncount = calculateservice.getReviewWordCount(worddatalist);
 			}
-		if(worddatalist.size() > 0)
-		{
-			CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
-			totalncount = calculateservice.getReviewWordCount(worddatalist);
+			
 		}
+		if(type != 0)
+		{
+			 Iterator it = aspectCategory.entrySet().iterator();
+			    while (it.hasNext()) 
+			    {
+			        Map.Entry pair = (Map.Entry)it.next();
+			       if(pair.getValue().equals(String.valueOf(type)))
+			       {
+			    	   categorytype = (String) pair.getKey();
+			    	   break;
+			       }
+			    }
 			
 		}
 		if(totalncount>0)
 		{
 			if(totalncount%2==0)
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is positive!"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is positive!"+" and type="+categorytype));
 			else
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is negative!"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is negative!"+" and type="+categorytype));
 		}else
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is positive!"));
-		
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is positive!"+" and type="+categorytype));
+				
 		return null;
+	}
+	
+	public ArrayList<Word> divideAspectWordlist(ArrayList<Word> wordlist)
+	{
+		ArrayList<Word> reslist = new ArrayList<>();
+		for (Word word : wordlist) 
+		{
+			if(word.getGrammar().equals("jj") || word.getGrammar().equals("nn") || word.getGrammar().equals("vb")) 
+			{
+				reslist.add(word);				
+			}	
+		}
+		return reslist;
 	}
 	
 	public static void main(String[]args) throws ClassNotFoundException, IOException

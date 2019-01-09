@@ -1,7 +1,5 @@
 package com.thesis.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-
 public class AspectWord {
 	int id;
 	int type;
