@@ -8,11 +8,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.thesis.model.ReviewResult;
 import com.thesis.model.Word;
 import com.thesis.service.AspectWordService;
 import com.thesis.service.CalculatePositiveNegativeService;
@@ -34,8 +34,17 @@ public class CalculatePositeNegativeAction implements Serializable{
 	int type = 0;
 	Map<String,String> aspectCategory;
 	String categorytype = "";
+	ArrayList<ReviewResult> reslist = new ArrayList<>();
 
 
+
+	public ArrayList<ReviewResult> getReslist() {
+		return reslist;
+	}
+
+	public void setReslist(ArrayList<ReviewResult> reslist) {
+		this.reslist = reslist;
+	}
 
 	public String getReview() {
 		return review;
@@ -57,65 +66,77 @@ public class CalculatePositeNegativeAction implements Serializable{
 		 aspectCategory.put("Direction", "6");
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public String calculate() throws ClassNotFoundException, IOException
 	{
 		
 		String roothpath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/")+"models/english-left3words-distsim.tagger";
 		int totalncount = 0;
-		MaxentTagger tagger =  new MaxentTagger(roothpath);
-		String tagged = tagger.tagString(review);
 		
+		String[] eachSentence = review.split("\\.");
 		
-		if(!tagged.equals(""))
+		for (String sentence : eachSentence) 
 		{
-				ArrayList<Word> worddatalist = new ArrayList<>();
-				tagged = tagged.toLowerCase();
-				String[]wordlist = tagged.split(" ");
-				for(int i=0; i<wordlist.length; i++)
-				{
-					Word word = new Word();
-					String [] w = wordlist[i].split("/");
-					word.setGrammar(w[1]);
-					word.setWord(w[0]);
-					worddatalist.add(word);
-				}
-			if(worddatalist.size() > 0)
+			ReviewResult res = new ReviewResult();
+			MaxentTagger tagger =  new MaxentTagger(roothpath);			
+			String tagged = tagger.tagString(sentence);
+						
+			if(!tagged.equals(""))
 			{
-				ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist);
-				if(aspectwordList.size() > 0)
+					ArrayList<Word> worddatalist = new ArrayList<>();
+					tagged = tagged.toLowerCase();
+					String[]wordlist = tagged.split(" ");
+					for(int i=0; i<wordlist.length; i++)
+					{
+						Word word = new Word();
+						String [] w = wordlist[i].split("/");
+						word.setGrammar(w[1]);
+						word.setWord(w[0]);
+						worddatalist.add(word);
+					}
+				if(worddatalist.size() > 0)
 				{
-					AspectWordService aspectService = new AspectWordService();
-					type = aspectService.getCategorytypeByMaxWord(aspectwordList);
+					ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist);
+					if(aspectwordList.size() > 0)
+					{
+						AspectWordService aspectService = new AspectWordService();
+						type = aspectService.getCategorytypeByMaxWord(aspectwordList);
+					}
+					CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
+					totalncount = calculateservice.getReviewWordCount(worddatalist);
 				}
-				CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
-				totalncount = calculateservice.getReviewWordCount(worddatalist);
+				
+			}
+			if(type != 0)
+			{
+				 Iterator<?> it = aspectCategory.entrySet().iterator();
+				    while (it.hasNext()) 
+				    {
+				        Map.Entry pair = (Map.Entry)it.next();
+				       if(pair.getValue().equals(String.valueOf(type)))
+				       {
+				    	   categorytype = (String) pair.getKey();
+				    	   break;
+				       }
+				    }
 			}
 			
+			res.setCategory(categorytype);
+			res.setSentence(sentence);
+			if(totalncount>0)
+			{
+				if(totalncount%2==0)
+					res.setType("Positive");
+				else
+					res.setType("Negative");
+			}else
+				res.setType("Positive");
+			reslist.add(res);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reviewResultList", reslist);
+
 		}
-		if(type != 0)
-		{
-			 Iterator it = aspectCategory.entrySet().iterator();
-			    while (it.hasNext()) 
-			    {
-			        Map.Entry pair = (Map.Entry)it.next();
-			       if(pair.getValue().equals(String.valueOf(type)))
-			       {
-			    	   categorytype = (String) pair.getKey();
-			    	   break;
-			       }
-			    }
-			
-		}
-		if(totalncount>0)
-		{
-			if(totalncount%2==0)
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is positive!"+" and type="+categorytype));
-			else
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is negative!"+" and type="+categorytype));
-		}else
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO!", "This Review is positive!"+" and type="+categorytype));
-				
-		return null;
+					
+		return "reviewRes";
 	}
 	
 	public ArrayList<Word> divideAspectWordlist(ArrayList<Word> wordlist)

@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/common/standardLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="reviewResultForm" >
+		<center>
+			<h1>
+				<h:outputText value="Movie Review Result by Each Document"  />
+			</h1>
+			</center>
+		
+			<p:separator styleClass="color:#006ECC"></p:separator>
+			<br></br>
+			
+	 <div class="ui-grid">
+			<div class="ui-grid-row">
+							
+			</div>			
+			</div>
+				<p:scrollPanel style="width:900px;height:450px">
+			 <h:panelGrid columns="3" cellpadding="8"  >
+			 <h:outputLabel style="font-weight:bold" value="Sentence"></h:outputLabel>
+			 <h:outputLabel style="font-weight:bold" value="Aspect Type"></h:outputLabel>
+			 <h:outputLabel style="font-weight:bold" value=""></h:outputLabel>
+
+            	<c:forEach var="value" items="#{mReviewResAction.reslist}">
+            		
+                	<h:outputLabel  value="#{value.sentence}"></h:outputLabel>
+                	<h:outputLabel  value="#{value.category}"></h:outputLabel>
+                	<h:outputLabel  value="#{value.type}"></h:outputLabel>
+                	
+                 </c:forEach>
+    		</h:panelGrid>
+			
+			</p:scrollPanel>
+
+				<p:commandButton id="back"
+						value="Back"
+						action="movieReview" 
+						styleClass="btn"
+						 immediate="true" ajax="false">
+					</p:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>

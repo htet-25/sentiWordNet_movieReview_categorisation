@@ -15,6 +15,7 @@ public class SentiWordNetDao {
 		ArrayList<SentiWordNet>res = new ArrayList<>();
 
 			Statement st = con.createStatement();
+			word = word.replaceAll("\\'", "");
 			 ResultSet rs = st.executeQuery("Select * from senti_wordnet where synset_terms like '%"+word+"%'");
 
 			while (rs.next()) {
