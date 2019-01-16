@@ -96,14 +96,15 @@ public class CalculatePositeNegativeAction implements Serializable{
 					}
 				if(worddatalist.size() > 0)
 				{
-					ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist);
+					ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist,"category");
 					if(aspectwordList.size() > 0)
 					{
 						AspectWordService aspectService = new AspectWordService();
 						type = aspectService.getCategorytypeByMaxWord(aspectwordList);
 					}
 					CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
-					totalncount = calculateservice.getReviewWordCount(worddatalist);
+					aspectwordList = divideAspectWordlist(worddatalist, "type");
+					totalncount = calculateservice.getReviewWordCount(aspectwordList);
 				}
 				
 			}
@@ -139,16 +140,29 @@ public class CalculatePositeNegativeAction implements Serializable{
 		return "reviewRes";
 	}
 	
-	public ArrayList<Word> divideAspectWordlist(ArrayList<Word> wordlist)
+	public ArrayList<Word> divideAspectWordlist(ArrayList<Word> wordlist,String divideType)
 	{
 		ArrayList<Word> reslist = new ArrayList<>();
-		for (Word word : wordlist) 
+		if(divideType.equals("category"))
 		{
-			if(word.getGrammar().equals("jj") || word.getGrammar().equals("nn") || word.getGrammar().equals("vb")) 
+			for (Word word : wordlist) 
 			{
-				reslist.add(word);				
-			}	
+				if(word.getGrammar().equals("nn") || word.getGrammar().equals("vb")) 
+				{
+					reslist.add(word);				
+				}	
+			}
+		}else if(divideType.equals("type"))
+		{
+			for (Word word : wordlist) 
+			{
+				if(word.getGrammar().equals("jj") || word.getGrammar().equals("rb")) 
+				{
+					reslist.add(word);				
+				}
+			}
 		}
+	
 		return reslist;
 	}
 	
