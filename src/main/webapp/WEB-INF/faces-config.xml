@@ -45,6 +45,12 @@
 			<to-view-id>/view/movie/MovieReviewresult.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>abouthome</from-outcome>
+			<to-view-id>/view/movie/MenuAbout.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	
 	</navigation-rule>
 </faces-config>

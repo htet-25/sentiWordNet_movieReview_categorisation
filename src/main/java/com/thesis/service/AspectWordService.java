@@ -48,7 +48,7 @@ public class AspectWordService {
 				{
 					for (String aspect : aspectwordlist) 
 					{
-						if(word.getWord().equals(aspect))
+						if(word.getWord().equals(aspect.toLowerCase()))
 						{
 							finalcount += 1;
 							break;

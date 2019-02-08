@@ -77,62 +77,73 @@ public class CalculatePositeNegativeAction implements Serializable{
 		
 		for (String sentence : eachSentence) 
 		{
-			ReviewResult res = new ReviewResult();
-			MaxentTagger tagger =  new MaxentTagger(roothpath);			
-			String tagged = tagger.tagString(sentence);
-						
-			if(!tagged.equals(""))
+			if(sentence.length()>3)
 			{
-					ArrayList<Word> worddatalist = new ArrayList<>();
-					tagged = tagged.toLowerCase();
-					String[]wordlist = tagged.split(" ");
-					for(int i=0; i<wordlist.length; i++)
-					{
-						Word word = new Word();
-						String [] w = wordlist[i].split("/");
-						word.setGrammar(w[1]);
-						word.setWord(w[0]);
-						worddatalist.add(word);
-					}
-				if(worddatalist.size() > 0)
+				ReviewResult res = new ReviewResult();
+				MaxentTagger tagger =  new MaxentTagger(roothpath);			
+				String tagged = tagger.tagString(sentence);
+							
+				if(!tagged.equals(""))
 				{
-					ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist,"category");
-					if(aspectwordList.size() > 0)
+					
+						ArrayList<Word> worddatalist = new ArrayList<>();
+						tagged = tagged.toLowerCase();
+						String[]wordlist = tagged.split(" ");
+						for(int i=0; i<wordlist.length; i++)
+						{
+							Word word = new Word();
+							String [] w = wordlist[i].split("/");
+							if(w[0].length()>3)
+							{
+								word.setGrammar(w[1]);
+								word.setWord(w[0]);
+								worddatalist.add(word);
+							}
+							
+						}
+					if(worddatalist.size() > 0)
 					{
-						AspectWordService aspectService = new AspectWordService();
-						type = aspectService.getCategorytypeByMaxWord(aspectwordList);
+						ArrayList<Word> aspectwordList = divideAspectWordlist(worddatalist,"category");
+						if(aspectwordList.size() > 0)
+						{
+							AspectWordService aspectService = new AspectWordService();
+							type = aspectService.getCategorytypeByMaxWord(aspectwordList);
+						}
+						CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
+						aspectwordList = divideAspectWordlist(worddatalist, "type");
+						totalncount = calculateservice.getReviewWordCount(aspectwordList);
 					}
-					CalculatePositiveNegativeService calculateservice = new CalculatePositiveNegativeService();
-					aspectwordList = divideAspectWordlist(worddatalist, "type");
-					totalncount = calculateservice.getReviewWordCount(aspectwordList);
+					
+					
+						
+				}
+				if(type != 0)
+				{
+					 Iterator<?> it = aspectCategory.entrySet().iterator();
+					    while (it.hasNext()) 
+					    {
+					        Map.Entry pair = (Map.Entry)it.next();
+					       if(pair.getValue().equals(String.valueOf(type)))
+					       {
+					    	   categorytype = (String) pair.getKey();
+					    	   break;
+					       }
+					    }
 				}
 				
-			}
-			if(type != 0)
-			{
-				 Iterator<?> it = aspectCategory.entrySet().iterator();
-				    while (it.hasNext()) 
-				    {
-				        Map.Entry pair = (Map.Entry)it.next();
-				       if(pair.getValue().equals(String.valueOf(type)))
-				       {
-				    	   categorytype = (String) pair.getKey();
-				    	   break;
-				       }
-				    }
+				res.setCategory(categorytype);
+				res.setSentence(sentence);
+				if(totalncount>0)
+				{
+					if(totalncount%2==0)
+						res.setType("Positive");
+					else
+						res.setType("Negative");
+				}else
+					res.setType("Positive");
+				reslist.add(res);
 			}
 			
-			res.setCategory(categorytype);
-			res.setSentence(sentence);
-			if(totalncount>0)
-			{
-				if(totalncount%2==0)
-					res.setType("Positive");
-				else
-					res.setType("Negative");
-			}else
-				res.setType("Positive");
-			reslist.add(res);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reviewResultList", reslist);
 
 		}

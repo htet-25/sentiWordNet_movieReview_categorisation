@@ -50,7 +50,8 @@ border: 1px solid #acdd4a ;
 
 /* HEADER */
 #page-header { position: relative; height: 80px; position: fixed; z-index: 2; width: 100%; top: 0px; border-bottom: 1px solid #a4fba6;
-    background-color: #0f9200;}
+    background-color: #0f9200; display: flex;
+  flex-direction: row;}
 #header-logo { float: left; width: 250px; height: 100%; font-size: 16px; position: relative; display: block; background-color: rgba(0,0,0,0.03); border-right: 1px solid rgba(255,255,255,0.14);}
 .logo-bg { background-color: rgba(255,255,255,.1); font-size: 10px; }
 #header-logo > a { color: #fff!important; text-decoration: none; font-size: 25px !important;font-family: 'Roboto', sans-serif; padding: 15px; position: absolute;}
@@ -58,6 +59,20 @@ border: 1px solid #acdd4a ;
 #page-header #language > a,
 #page-header #language > span { color: #ffffff!important;}
 
+.center-title {
+  text-align: center;
+  float: right;
+  color: white;
+  width: fit;
+   flex-grow: 1;
+  font-size: 15px;
+  background-color: rgba(0,0,0,0.03); border-right: 1px solid rgba(255,255,255,0.14);
+  display: block;
+}
+.result{
+	color: green;
+	font-size: 18px;
+}
 
 #logout-logo { float: right; width: 250px; height: 100%; font-size: 25px; position: relative; display: block;  background-color: rgba(0,0,0,0.03); border-right: 1px solid rgba(255,255,255,0.14);color:white;}
 #logout-logo > a { color: #fff!important; text-decoration: underline; font-size: 25px !important;font-family: 'Roboto', sans-serif; padding: 15px; position: absolute; }
@@ -640,3 +655,15 @@ div.panel.show {
 .text-area-noresize {
 	resize: none;
 }
+
+.about{
+	
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-attachment:fixed;
+	position: relative;
+    height:530px; 
+}
+
+
+

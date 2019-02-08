@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	template="/common/standardLayout.xhtml">
+	template="/view/common/standardLayout.xhtml">
 	<ui:define name="content">
 		<h:form id="reviewResultForm" >
 		<center>
@@ -23,19 +23,19 @@
 			</div>			
 			</div>
 				<p:scrollPanel style="width:900px;height:450px">
-			 <h:panelGrid columns="3" cellpadding="8"  >
-			 <h:outputLabel style="font-weight:bold" value="Sentence"></h:outputLabel>
-			 <h:outputLabel style="font-weight:bold" value="Aspect Type"></h:outputLabel>
-			 <h:outputLabel style="font-weight:bold" value=""></h:outputLabel>
+			 <p:panelGrid columns="3" border="2" cellpadding="5" style="margin: 50px;"  >
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Sentence"></h:outputLabel>
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Aspect Type"></h:outputLabel>
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value=""></h:outputLabel>
 
             	<c:forEach var="value" items="#{mReviewResAction.reslist}">
             		
-                	<h:outputLabel  value="#{value.sentence}"></h:outputLabel>
-                	<h:outputLabel  value="#{value.category}"></h:outputLabel>
-                	<h:outputLabel  value="#{value.type}"></h:outputLabel>
+                	<h:outputText class="result"  value="#{value.sentence}"></h:outputText>
+                	<h:outputText class="result"  value="#{value.category}"></h:outputText>
+                	<h:outputText class="result" value="#{value.type}"></h:outputText>
                 	
                  </c:forEach>
-    		</h:panelGrid>
+    		</p:panelGrid>
 			
 			</p:scrollPanel>
 

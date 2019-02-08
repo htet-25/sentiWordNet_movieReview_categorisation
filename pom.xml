@@ -29,7 +29,6 @@
 		<org.mybatis.mybatis-spring>1.2.3</org.mybatis.mybatis-spring>
 		<org.apache.commons>3.4</org.apache.commons>
 		<commons-codec>1.10</commons-codec>
-		<mysql>5.1.8</mysql>
 		<joda-time>2.8.1</joda-time>
 		<com.zaxxer>2.4.1</com.zaxxer>
 		<org.slf4j>1.6.1</org.slf4j>
@@ -166,11 +165,7 @@
 			<version>${commons-codec}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql}</version>
-		</dependency>
+	
 
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -331,6 +326,13 @@
     <artifactId>stanford-pos-tagger</artifactId>
     <version>3.0.2</version>
 </dependency>
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.11</version>
+</dependency>
+
 	
 		<dependency>
             <groupId>org.glassfish</groupId>
