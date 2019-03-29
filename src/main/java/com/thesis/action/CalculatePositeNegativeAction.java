@@ -79,13 +79,14 @@ public class CalculatePositeNegativeAction implements Serializable{
 		{
 			if(sentence.length()>3)
 			{
+				System.out.println("each sentence: "+sentence);
 				ReviewResult res = new ReviewResult();
 				MaxentTagger tagger =  new MaxentTagger(roothpath);			
 				String tagged = tagger.tagString(sentence);
 							
 				if(!tagged.equals(""))
 				{
-					
+						System.out.println("tagg: "+tagged);
 						ArrayList<Word> worddatalist = new ArrayList<>();
 						tagged = tagged.toLowerCase();
 						String[]wordlist = tagged.split(" ");
