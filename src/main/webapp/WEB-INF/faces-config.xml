@@ -35,6 +35,13 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>movieReviewResChart</from-outcome>
+			<to-view-id>/view/movie/MovieReviewresultChart.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		
+		<navigation-case>
 			<from-outcome>aspectCategory</from-outcome>
 			<to-view-id>/view/movie/AspectWordView.xhtml</to-view-id>
 			<redirect />

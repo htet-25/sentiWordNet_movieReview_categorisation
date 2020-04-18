@@ -18,6 +18,7 @@ import com.thesis.service.AspectWordService;
 import com.thesis.service.CalculatePositiveNegativeService;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import scala.actors.threadpool.Arrays;
 
 
 
@@ -72,20 +73,31 @@ public class CalculatePositeNegativeAction implements Serializable{
 		
 		String roothpath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/")+"models/english-left3words-distsim.tagger";
 		int totalncount = 0;
-		
-		String[] eachSentence = review.split("\\.");
-		
+		int ncount = 0;
+		int tsentence = 0;
+	
+		review.replace("?", "\\.");
+		String[] eachSentence = review.split("(\\?)|(\\.)");
+		String[] negativeWordlist = {"am not","is not","isn't","are not","aren't","ain't","was not","wasn't","were","weren't","has not","hasn't",
+				"have not","haven't","had not","hadn't","do not","don't","does not","doesn't","did not",
+				"didn't","cannot","can't","couldn't","shall not","could not","should not","shouldn't",
+				"will not","won't","may not","nobody","neither","none","nothing","non","no","not",
+				"mayn't","might not","mightn't","must not","mustn't","seldom","never","hardly","rarely"};
+		tsentence = eachSentence.length;
 		for (String sentence : eachSentence) 
 		{
 			if(sentence.length()>3)
 			{
+				String lowersentence = sentence.toLowerCase();
+				String[] originalwordlist = lowersentence.split(" ");
+				ncount = countNegativeWordlist(originalwordlist, negativeWordlist);
+						
 				ReviewResult res = new ReviewResult();
 				MaxentTagger tagger =  new MaxentTagger(roothpath);			
 				String tagged = tagger.tagString(sentence);
 							
 				if(!tagged.equals(""))
 				{
-					
 						ArrayList<Word> worddatalist = new ArrayList<>();
 						tagged = tagged.toLowerCase();
 						String[]wordlist = tagged.split(" ");
@@ -135,20 +147,61 @@ public class CalculatePositeNegativeAction implements Serializable{
 				res.setSentence(sentence);
 				if(totalncount>0)
 				{
-					if(totalncount%2==0)
-						res.setType("Positive");
-					else
-						res.setType("Negative");
+					if(ncount > 0)
+					{
+						if(ncount%2 == 0)
+						{
+							if(totalncount%2==0)
+								res.setType("Positive");
+							else
+								res.setType("Negative");
+						}else res.setType("Negative");
+					}else
+					{
+						if(totalncount%2==0)
+							res.setType("Positive");
+						else
+							res.setType("Negative");
+					}
+					
+					
 				}else
-					res.setType("Positive");
+				{
+					if(ncount > 0)
+					{
+						if(ncount%2 == 0)
+						{
+							res.setType("Positive");
+						}else res.setType("Negative");
+
+					}else res.setType("Positive");
+					
+				}
+					
 				reslist.add(res);
 			}
 			
+			
+			
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reviewResultList", reslist);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tsentence", tsentence);
 
 		}
 					
 		return "reviewRes";
+	}
+	
+	public int countNegativeWordlist(String[]negativewords, String[] dlist)
+	{
+		int res = 0;
+		ArrayList<String> defaultlist = new ArrayList<>();
+		defaultlist.addAll(Arrays.asList(dlist));
+		ArrayList<String> negativeWordlist = new ArrayList<>();
+		negativeWordlist.addAll(Arrays.asList(negativewords));
+		defaultlist.retainAll(negativeWordlist);
+		res = defaultlist.size();
+		
+		return res;
 	}
 	
 	public ArrayList<Word> divideAspectWordlist(ArrayList<Word> wordlist,String divideType)
@@ -185,7 +238,10 @@ public class CalculatePositeNegativeAction implements Serializable{
 		String tagged = tagger.tagString(a);
 		System.out.println(tagged);*/
 		//String taggedStr = tagger.tagString("The �Java Decompiler project� aims to develop tools in order to decompile and analyze");
-	
+//	String rs = "How about this movie ? I like it. There are four.";
+//	rs.replaceAll("\\?", ".");
+//	String[] res = rs.split("(\\?)|(\\.)");
+//	System.out.print(res);
 
 	}
 

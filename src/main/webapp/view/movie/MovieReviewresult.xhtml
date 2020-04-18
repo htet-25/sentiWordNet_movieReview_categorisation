@@ -9,7 +9,123 @@
 	<ui:define name="content">
 		<h:form id="reviewResultForm" >
 		<center>
+		
 			<h1>
+			
+					<script>
+		
+		function exportChart()
+		{		 
+				var chartlist = ${mReviewResAction.chartjson};
+				var treatmentunit1 = '';
+				var conceptlist;
+				var valuelist;
+				
+				var jsonseries1 = {				
+						data:[]				
+				};
+				var jsonNegativeSerires = {				
+						data:[]				
+				};
+					
+					 
+					 for(let i = 0; i &lt; chartlist.length; i++){
+
+						   //console.log(chartlist[i].concept_title);
+							//conceptlist.push(chartlist[i].category);								
+							jsonseries1.data.push({
+									  name : chartlist[i].category,
+									   y : chartlist[i].pcount,
+									  
+								   }), 
+							jsonNegativeSerires.data.push({
+								  name : chartlist[i].category,
+								   y : chartlist[i].ncount,
+								  
+							   }); 
+								 										   				
+						}
+					
+			
+					var chart= {
+					        type: 'column'
+					       
+					    };
+					   var title= {
+					        text: 'Movie Review'
+					    };
+					   
+					    var xAxis = {
+					    		title:{
+					    			text: 'Type of Aspect'
+					    		},
+					    		
+					    		categories: ['Screenplay', 'Music', 'Movie', 'Acting', 'Plot', 'Direction', 'Untitle']
+					        
+					    };
+					  var  yAxis= {
+							  allowDecimals: false,
+							  title: {
+					            text: 'No of Sentence'					            
+							  }
+					    };
+					  var  legend = {
+					        enabled: false
+					    };
+					    var plotOptions= {
+					        series: {
+					            borderWidth: 0,
+					            dataLabels: {
+					                enabled: false
+					               
+					            }
+					    
+					        }
+					    };
+					    
+					    subtitle= {
+					        text: 'When resizing the window or the frame, the chart should resize'
+					    };
+
+					  
+
+					    var series= [				                    
+					   					{
+									    	name: "Positive Count",
+									        data: jsonseries1.data			       			        
+					   					},
+					   					{
+									    	name: "Negative Count",
+									        data: jsonNegativeSerires.data			       			        
+					   					}
+					    			];
+					        
+			 var json = {};   
+		     json.chart = chart; 
+		     json.title = title;   
+		     //json.subtitle = subtitle;
+		    
+		    json.xAxis = xAxis;
+		     json.yAxis = yAxis;  
+		     json.series = series;
+		     json.plotOptions = plotOptions;  
+			
+		   
+		     jQuery('#chartArea').highcharts(json);
+		     
+		   /*    jQuery('#chartarea').printArea({
+				mode : "popup"
+				
+			}); */  
+			jQuery('#resArea').hide();
+			jQuery('#chartArea').show();
+
+			//jQuery('#chartarea').show;
+		    
+		}		
+		</script>
+			
+			
 				<h:outputText value="Movie Review Result by Each Document"  />
 			</h1>
 			</center>
@@ -17,19 +133,26 @@
 			<p:separator styleClass="color:#006ECC"></p:separator>
 			<br></br>
 			
-	 <div class="ui-grid">
-			<div class="ui-grid-row">
-							
-			</div>			
-			</div>
-				<p:scrollPanel style="width:900px;height:450px">
-			 <p:panelGrid columns="3" border="2" cellpadding="5" style="margin: 50px;"  >
+
+			
+			<div id ="resArea">
+			 <h:outputLabel style="font-weight:bold; font-size: 22px;" value="Positive Count: #{mReviewResAction.positiveCount} and Negative Count: #{mReviewResAction.negativeCount}"></h:outputLabel>
+			<br></br>
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Total Sentence: #{mReviewResAction.tsentence}"></h:outputLabel>
+			 <br></br>
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Analysis: #{mReviewResAction.analysis}"></h:outputLabel>
+			 
+
+			<p:scrollPanel style="width:900px;height:450px">
+			 <p:panelGrid columns="4" border="2" cellpadding="5" style="margin: 50px;"  >
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="No"></h:outputLabel>
 			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Sentence"></h:outputLabel>
 			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Aspect Type"></h:outputLabel>
-			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value=""></h:outputLabel>
+			 <h:outputLabel style="font-weight:bold; font-size: 20px;" value="Sentiment Analysis"></h:outputLabel>
+				
 
-            	<c:forEach var="value" items="#{mReviewResAction.reslist}">
-            		
+            	<c:forEach var="value" items="#{mReviewResAction.reslist}" varStatus="inner">
+					<h:outputText value="#{inner.index + 1}."></h:outputText>
                 	<h:outputText class="result"  value="#{value.sentence}"></h:outputText>
                 	<h:outputText class="result"  value="#{value.category}"></h:outputText>
                 	<h:outputText class="result" value="#{value.type}"></h:outputText>
@@ -38,12 +161,20 @@
     		</p:panelGrid>
 			
 			</p:scrollPanel>
+</div>
+<div id="chartArea"  style="display: none; width: 550px; height: 500px;">
 
+</div>
 				<p:commandButton id="back"
 						value="Back"
 						action="movieReview" 
 						styleClass="btn"
 						 immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton id="viewchart"
+						value="View as Chart"
+						styleClass="btn"
+						onclick="exportChart()" >
 					</p:commandButton>
 		</h:form>
 	</ui:define>

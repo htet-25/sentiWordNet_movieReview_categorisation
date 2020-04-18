@@ -5,6 +5,7 @@ public class ReviewResult {
 	String sentence;
 	String category;
 	String type;
+
 	public String getSentence() {
 		return sentence;
 	}
@@ -29,6 +30,7 @@ public class ReviewResult {
 		this.sentence = "";
 		this.category = "";
 		this.type = "";
+		
 	}
 
 }
