@@ -86,6 +86,6 @@ http://localhost:8080/sentiWordNet_movieReview_categorisation
 Htet Aung Naing
 📍 Toronto, Canada
 📧 hanmaple92@gmail.com
-🔗 GitHub
+[🔗 GitHub](https://github.com/htet-25)
 
 
